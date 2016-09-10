@@ -52,6 +52,6 @@ public class PracticeSchedule {
         m_TemplateList.add(new ScheduledExerciseTemplate(exTemplate,day) );
     }
 
-    
+
 
 }

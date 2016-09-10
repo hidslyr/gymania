@@ -12,4 +12,21 @@
     <!-- Nav item dimen -->
     <dimen name="nav_item_textSize">30dp</dimen>
 
+
+
+    <!--Timer text-->
+    <dimen name="timer_text_layout_width">wrap_content</dimen>
+    <dimen name="timer_text_layout_height">wrap_content</dimen>
+    <dimen name="timer_text_size">50dp</dimen>
+    <dimen name="timer_text_margin_top">20dp</dimen>
+    <dimen name="timer_text_margin_bottom">20dp</dimen>
+
+
+    <!--Start break button-->
+    <dimen name="start_break_button_layout_width">wrap_content</dimen>
+    <dimen name="start_break_button_layout_height">wrap_content</dimen>
+    <dimen name="start_break_button_size">20dp</dimen>
+    <dimen name="start_break_button_margin_top">20dp</dimen>
+    <dimen name="start_break_button_margin_bottom">20dp</dimen>
+
 </resources>
