@@ -6,4 +6,7 @@ package k25.datle.gymania.Profile;
 
 public class Profile {
 
+    public Profile() {
+
+    }
 }
