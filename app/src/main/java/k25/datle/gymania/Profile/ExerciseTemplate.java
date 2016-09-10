@@ -7,6 +7,7 @@ import java.util.Vector;
 
 public class ExerciseTemplate {
     Vector<Exercise> m_ExerciseList;
+    String m_TemplateName;
     int m_BreakTimePerExercise;
 
     public ExerciseTemplate() {
