@@ -22,7 +22,9 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 
+import k25.datle.gymania.Fragment.PracticeFragment;
 import k25.datle.gymania.Fragment.ProfileFragment;
+import k25.datle.gymania.Fragment.TimerFragment;
 import k25.datle.gymania.Utils.SplashActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -104,18 +106,14 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment newFragment = new Fragment();
 
         if (id == R.id.nav_profile) {
-            Fragment newFragment = new ProfileFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, newFragment);
-            transaction.addToBackStack(null);
-
-            transaction.commit();
+            newFragment = new ProfileFragment();
         } else if (id == R.id.nav_practice) {
-
+            newFragment = new PracticeFragment();
         } else if (id == R.id.nav_slideshow) {
-
+            newFragment = new TimerFragment();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -123,6 +121,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

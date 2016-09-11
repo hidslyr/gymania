@@ -1,4 +1,4 @@
-package k25.datle.gymania.Timer;
+package k25.datle.gymania.Utils;
 
 import android.content.Context;
 import android.os.Handler;
@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.widget.Toast;
 
 public abstract class CustomCountDownTimer {
+
 
 	/**
 	 * Millis since epoch when alarm should stop.

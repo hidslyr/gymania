@@ -1,4 +1,4 @@
-package k25.datle.gymania.Profile;
+package k25.datle.gymania.Exercise;
 
 import java.util.Vector;
 
