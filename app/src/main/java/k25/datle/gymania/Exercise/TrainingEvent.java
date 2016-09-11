@@ -13,7 +13,7 @@ public class TrainingEvent {
     int m_TrainingType;
 
     public TrainingEvent() {
-        
+
     }
 
     public TrainingEvent(Exercise ex) {

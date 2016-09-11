@@ -6,16 +6,12 @@ package k25.datle.gymania.Exercise;
 
 public class CardioExercise extends Exercise {
 
-    int m_PracticeTime;
-
     public CardioExercise(String name, int breakTime, int setCount, int practiceTime) {
         m_Name = name;
         m_BreakTime = breakTime;
         m_SetCount = setCount;
         m_PracticeTime = practiceTime;
+        m_Type = Type.CARDIO;
     }
 
-    public int GetPracticeTime() {
-        return m_PracticeTime;
-    }
 }
