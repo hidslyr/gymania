@@ -9,4 +9,10 @@
 
     <!-- nav string-->
     <string name="nav_profile">Profile</string>
+
+    <string-array name="set_count_array">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

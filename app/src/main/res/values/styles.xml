@@ -38,4 +38,14 @@
         <item name="android:layout_marginBottom">@dimen/start_break_button_margin_bottom</item>
     </style>
 
+    <style name ="ex_name_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/ex_name_text_size</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/ex_name_text_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/ex_name_text_margin_bottom</item>
+    </style>
+
+
 </resources>

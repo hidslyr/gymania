@@ -6,7 +6,7 @@ package k25.datle.gymania.Exercise;
 
 public class CardioExercise extends Exercise {
 
-    public CardioExercise(String name, int breakTime, int setCount, int practiceTime) {
+    public CardioExercise(String name, int practiceTime, int breakTime, int setCount ) {
         m_Name = name;
         m_BreakTime = breakTime;
         m_SetCount = setCount;

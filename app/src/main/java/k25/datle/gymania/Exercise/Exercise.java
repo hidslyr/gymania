@@ -37,7 +37,7 @@ public class Exercise {
     }
 
     public int GetSetCount() {
-        return m_BreakTime;
+        return m_SetCount;
     }
 
     public int GetType() { return m_Type; }

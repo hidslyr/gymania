@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import k25.datle.gymania.Exercise.TrainingEvent;
 import k25.datle.gymania.MainActivity;
 import k25.datle.gymania.Utils.CustomCountDownTimer;
 
@@ -27,19 +28,36 @@ public class TimerFragment extends Fragment{
     View m_RootView;
     TextView m_TimerText;
     Button m_StartBreakButton;
+    TrainingEvent m_TrainingEvent;
+    boolean m_Started = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (m_RootView == null) {
+            Log.i("TimerFragmentOnCreate", "CreateView");
+            m_RootView = inflater.inflate(R.layout.fragment_timer_layout, container, false);
+            m_TrainingEvent.SetView(m_RootView);
+            m_TimerText = (TextView) m_RootView.findViewById(R.id.timer_text);
+            m_StartBreakButton = (Button) m_RootView.findViewById(R.id.start_break_button);
+            m_StartBreakButton.setEnabled(false);
+        }
 
-        m_RootView = inflater.inflate(R.layout.fragment_timer_layout, container, false);
+        Log.i("TimerFragmentOnCreate", "Start");
 
-        m_TimerText = (TextView) m_RootView.findViewById(R.id.timer_text);
-        m_StartBreakButton = (Button) m_RootView.findViewById(R.id.start_break_button);
-        m_StartBreakButton.setEnabled(false);
+        if (m_Started == false) {
+            Log.i("TimerFragmentOnCreate", "StartEvent");
+            m_TrainingEvent.Start();
+            m_Started = true;
+        }
 
-        CreateTimer();
+
+        //CreateTimer();
         return m_RootView;
+    }
+
+    public void InitTrainingEvent(TrainingEvent event) {
+        m_TrainingEvent = event;
     }
 
     void CreateTimer() {

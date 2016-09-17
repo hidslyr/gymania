@@ -1,5 +1,6 @@
 package k25.datle.gymania;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +23,9 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 
+import k25.datle.gymania.Exercise.CardioExercise;
+import k25.datle.gymania.Exercise.Exercise;
+import k25.datle.gymania.Exercise.TrainingEvent;
 import k25.datle.gymania.Fragment.PracticeFragment;
 import k25.datle.gymania.Fragment.ProfileFragment;
 import k25.datle.gymania.Fragment.TimerFragment;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private ActionBarDrawerToggle m_ActionBarDrawerToggle;
     private Toolbar toolbar;
     private NavigationView m_NavigationView;
+    private TimerFragment m_TimmerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +118,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_practice) {
             newFragment = new PracticeFragment();
         } else if (id == R.id.nav_slideshow) {
-            newFragment = new TimerFragment();
+            if (m_TimmerFragment == null) {
+                m_TimmerFragment = new TimerFragment();
+                CardioExercise ex = new CardioExercise("TABATA",30,20,3);
+                TrainingEvent trainingEvent = new TrainingEvent(ex);
+                m_TimmerFragment.InitTrainingEvent(trainingEvent);
+            }
+            newFragment = m_TimmerFragment;
+
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

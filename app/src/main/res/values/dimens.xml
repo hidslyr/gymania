@@ -16,7 +16,7 @@
 
     <!--Timer text-->
     <dimen name="timer_text_size">100dp</dimen>
-    <dimen name="timer_text_margin_top">150dp</dimen>
+    <dimen name="timer_text_margin_top">90dp</dimen>
     <dimen name="timer_text_margin_bottom">20dp</dimen>
 
 
@@ -24,5 +24,23 @@
     <dimen name="start_break_button_size">20dp</dimen>
     <dimen name="start_break_button_margin_top">20dp</dimen>
     <dimen name="start_break_button_margin_bottom">20dp</dimen>
+
+    <!--Timer text-->
+    <dimen name="ex_name_text_size">40dp</dimen>
+    <dimen name="ex_name_text_margin_top">50dp</dimen>
+    <dimen name="ex_name_text_margin_bottom">0dp</dimen>
+
+    <!--New exercise input text-->
+    <dimen name="new_exercise_input_text_size">16dp</dimen>
+    <item name="new_exercise_input_text_layout_weight" format="float" type="dimen">1</item>
+    <dimen name="new_exercise_input_text_margin_left">40dp</dimen>
+
+
+    <!--New exercise input edit text-->
+    <item name="new_exercise_input_number_edit_text_layout_weight" format="float" type="dimen">1</item>
+    <item name="new_exercise_number_edit_text_ems" format="integer" type="dimen">1</item>
+
+    <item name="new_exercise_empty_view_layout_weight" format="float" type="dimen">0.5</item>
+
 
 </resources>

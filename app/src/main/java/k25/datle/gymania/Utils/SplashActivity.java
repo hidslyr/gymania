@@ -31,7 +31,8 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try {
                     super.run();
-                    sleep(5000);
+                    DataManager.GetInstance().Init(getApplicationContext());
+                    sleep(3000);
                 } catch (Exception e) {
 
                 } finally {
