@@ -1,5 +1,7 @@
 package k25.datle.gymania.Exercise;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import java.util.Observable;
 
 import k25.datle.gymania.Fragment.PracticeFragment;
+import k25.datle.gymania.MainActivity;
 import k25.datle.gymania.Utils.CustomCountDownTimer;
 import k25.datle.gymania.Utils.TimeSequence;
 import k25.datle.gymania.Utils.Utils;
@@ -17,7 +20,10 @@ import k25.datle.gymania.R;
  * Created by Nguyen on 9/11/2016.
  */
 
-public class TrainingEvent extends Observable {
+public class TrainingEvent{
+
+
+
     public class TrainingType {
         public static final int Exercise = 1;
         public static final int ExerciseTemplate = 2;
@@ -28,26 +34,32 @@ public class TrainingEvent extends Observable {
         public static final int WAITING = 2;
     }
 
-    State m_State;
-    boolean m_IsCurrentCountDownDone = false;
-    boolean m_IsCurrentExerciseDone;
     int m_CurrentCountDownIdx = 0;
 
+
+    Context m_Context;
+    boolean m_IsDone = false;
     int m_TrainingType;
     Exercise m_Exercise;
     View m_View;
+    MainActivity m_MainActiviyRef;
 
     public TrainingEvent() {
 
     }
 
-    public TrainingEvent(Exercise ex) {
+    public TrainingEvent(Context ctx , Exercise ex) {
         m_TrainingType = TrainingType.Exercise;
         m_Exercise = ex;
+        m_Context = ctx;
     }
 
     public TrainingEvent(ExerciseTemplate exTemplate) {
         m_TrainingType = TrainingType.ExerciseTemplate;
+    }
+
+    public void SetMainActivityRef(MainActivity activity) {
+        m_MainActiviyRef = activity;
     }
 
     public void SetView(View view) {
@@ -62,19 +74,23 @@ public class TrainingEvent extends Observable {
         for (int i= 0; i< sequence.m_Size; i++) {
             Log.i("TraningEvent" ,"TimeSequence " + i + " " + sequence.m_Sequence[i]);
         }
-
-        TextView nameTextView = (TextView)m_View.findViewById(R.id.ex_name_text);
-        nameTextView.setText(m_Exercise.GetName());
         CountDownByTimeSequence(sequence);
 
     }
 
     private void CountDownByTimeSequence(final TimeSequence timeSequence) {
+
         int size = timeSequence.m_Size;
         int[] sequence = timeSequence.m_Sequence;
 
         if (m_CurrentCountDownIdx >= size) {
             Log.i("TraningEvent","Done");
+            m_IsDone = true;
+
+            if (m_MainActiviyRef != null) {
+                m_MainActiviyRef.DisplayPracticeView();
+            }
+
             return;
         }
 
@@ -89,6 +105,8 @@ public class TrainingEvent extends Observable {
             break_btn.setText("BREAKING");
         }
 
+        break_btn.setEnabled(false);
+
         Log.i("TraningEvent","Current CoundDowntIdx : " + m_CurrentCountDownIdx);
 
         final TextView tv = (TextView)m_View.findViewById(R.id.timer_text);
@@ -100,8 +118,19 @@ public class TrainingEvent extends Observable {
                 int seconds = (int) (millisUntilFinished / 1000);
                 int minutes = seconds / 60;
 
+                seconds = seconds - minutes * 60;
+
                 Log.i("TraningEvent" ,"CountDownTimer "+ millisUntilFinished);
-                tv.setText(minutes + ":" + seconds);
+
+                String secondsString;
+                if (seconds < 10) {
+                    secondsString = "0" + seconds;
+                } else {
+                    secondsString = "" + seconds;
+                }
+
+
+                tv.setText(minutes + ":" + secondsString);
             }
 
             @Override
@@ -109,22 +138,36 @@ public class TrainingEvent extends Observable {
                 super.onFinish();
                 m_CurrentCountDownIdx++;
                 CountDownByTimeSequence(timeSequence);
+                Button break_btn = (Button) m_View.findViewById(R.id.start_break_button);
+                final MediaPlayer mp = MediaPlayer.create(m_Context,R.raw.sound_done);
+                mp.start();
 
+                CustomCountDownTimer timer = new CustomCountDownTimer(2000, 1000) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        // Nothing to do
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        if (mp.isPlaying()) {
+                            mp.stop();
+                            mp.release();
+                        }
+                    }
+                };
+                timer.start();
             }
         };
         timer.start();
     }
 
-    private void SetState(PracticeFragment.State state) {
-
+    public Exercise GetExercise() {
+        return m_Exercise;
     }
 
-    private void SetTimeCountDown(int index, int[] sequence) {
-        if (index%2 == 0) {
-            //Practice countdown
-
-        } else {
-            //Breaking countdown
-        }
+    public boolean IsDone() {
+        return m_IsDone;
     }
 }

@@ -2,12 +2,16 @@ package k25.datle.gymania;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,16 +27,31 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import android.content.pm.Signature;
+
 import k25.datle.gymania.Exercise.CardioExercise;
 import k25.datle.gymania.Exercise.Exercise;
 import k25.datle.gymania.Exercise.TrainingEvent;
+import k25.datle.gymania.Fragment.PhotoFragment;
 import k25.datle.gymania.Fragment.PracticeFragment;
 import k25.datle.gymania.Fragment.ProfileFragment;
 import k25.datle.gymania.Fragment.TimerFragment;
+import k25.datle.gymania.Profile.Profile;
 import k25.datle.gymania.Utils.SplashActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public class NavigationItem {
+        public static final int PROFILE = 1;
+        public static final int PRACTICE = 2;
+        public static final int PHOTO = 3;
+
+        public static final int SHARE = 4;
+        public static final int SEND = 5;
+    }
 
     private Fragment m_ProfileFragment;
     private FragmentManager m_FragmentManger;
@@ -40,7 +59,9 @@ public class MainActivity extends AppCompatActivity
     private ActionBarDrawerToggle m_ActionBarDrawerToggle;
     private Toolbar toolbar;
     private NavigationView m_NavigationView;
-    private TimerFragment m_TimmerFragment;
+    private TimerFragment m_TimerFragment;
+    private PracticeFragment m_PracticeFragment;
+    private PhotoFragment m_PhotoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +71,31 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
         SetupNavDrawer();
+
+        m_ProfileFragment = new ProfileFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, m_ProfileFragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+
+
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(this.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i("HaskKey", "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("HaskKey: " ,"" + e);
+        } catch (Exception e) {
+            Log.e("HaskKey", "printHashKey()", e);
+        }
+
     }
 
     public void SetupNavDrawer() {
@@ -106,6 +141,61 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void OnNavItemSelected(int idx) {
+        switch (idx) {
+            case NavigationItem.PROFILE: {
+
+            }
+        }
+    }
+
+    public void DisplayProfileView() {
+        if (m_ProfileFragment == null) {
+            m_ProfileFragment = new PracticeFragment();
+        }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, m_ProfileFragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void DisplayPracticeView() {
+        if (m_PracticeFragment == null) {
+            m_PracticeFragment = new PracticeFragment();
+        }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, m_PracticeFragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void DisplayTimeCountDownView(Exercise ex) {
+        if (m_TimerFragment == null || m_TimerFragment.IsDone()) {
+            m_TimerFragment = new TimerFragment();
+            TrainingEvent trainingEvent = new TrainingEvent(getApplicationContext(),ex);
+            m_TimerFragment.InitTrainingEvent(trainingEvent);
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, m_TimerFragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -116,20 +206,22 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
             newFragment = new ProfileFragment();
         } else if (id == R.id.nav_practice) {
-            newFragment = new PracticeFragment();
-        } else if (id == R.id.nav_slideshow) {
-            if (m_TimmerFragment == null) {
-                m_TimmerFragment = new TimerFragment();
-                CardioExercise ex = new CardioExercise("TABATA",30,20,3);
-                TrainingEvent trainingEvent = new TrainingEvent(ex);
-                m_TimmerFragment.InitTrainingEvent(trainingEvent);
+            if (m_TimerFragment!=null && !m_TimerFragment.IsDone()) {
+                newFragment = m_TimerFragment;
+            } else if (m_PracticeFragment == null) {
+                m_PracticeFragment = new PracticeFragment();
+                newFragment = m_PracticeFragment;
+            } else {
+                newFragment = m_PracticeFragment;
             }
-            newFragment = m_TimmerFragment;
+        } else if (id == R.id.nav_photo) {
 
-        } else if (id == R.id.nav_manage) {
-
+            if (m_PhotoFragment == null) {
+                m_PhotoFragment = new PhotoFragment();
+            }
+            newFragment = m_PhotoFragment;
         } else if (id == R.id.nav_share) {
-
+                //TODO : Facebook share
         } else if (id == R.id.nav_send) {
 
         }
@@ -170,5 +262,13 @@ public class MainActivity extends AppCompatActivity
     public void onStop() {
         super.onStop();
 
+    }
+
+    public PracticeFragment GetPracticeFragment() {
+        return m_PracticeFragment;
+    }
+
+    public PhotoFragment GetPhotoFragment() {
+        return m_PhotoFragment;
     }
 }

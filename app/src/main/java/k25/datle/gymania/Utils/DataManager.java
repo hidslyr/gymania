@@ -3,6 +3,7 @@ package k25.datle.gymania.Utils;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 import android.database.Cursor;
@@ -94,7 +95,7 @@ public class DataManager {
         }
     }
 
-    public void AddExercise(Exercise ex) {
+    public boolean AddExercise(Exercise ex) {
         ContentValues values = new ContentValues();
         String exName = ex.GetName();
         Integer practiceTime = ex.GetPracticeTime();
@@ -108,12 +109,10 @@ public class DataManager {
         String msg;
 
         if (m_Database.insert("exercise", null, values) == -1) {
-            msg = "Failed to save Exercise";
+            return false;
         } else {
-            msg = "Save Exercise successful";
+            return true;
         }
-
-        Toast.makeText(m_Context,msg, Toast.LENGTH_SHORT).show();
     }
 
     public Vector<Exercise> GetExerciseFromDatabase() {
@@ -153,5 +152,15 @@ public class DataManager {
         c.close();
 
         return exercises;
+    }
+
+    public boolean DeleteExercise(String name) {
+        if (m_Database.delete("exercise",ExerciseRecord.NAME + "=?", new String[] {name} ) == -1) {
+            Log.i("DataManager", "Delete exercise failed");
+            return false;
+        } else {
+            Log.i("DataManager","Delete exercise success");
+            return true;
+        }
     }
 }
