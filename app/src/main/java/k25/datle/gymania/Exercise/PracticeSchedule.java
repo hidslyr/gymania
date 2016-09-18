@@ -3,7 +3,7 @@ package k25.datle.gymania.Exercise;
 import java.util.Vector;
 
 /**
- * Created by Nguyen on 9/10/2016.
+ * Created by Dat Le on 9/10/2016.
  */
 
 

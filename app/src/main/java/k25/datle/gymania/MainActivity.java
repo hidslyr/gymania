@@ -23,13 +23,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.Fragment;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import android.content.pm.Signature;
+
+import com.facebook.FacebookSdk;
 
 import k25.datle.gymania.Exercise.CardioExercise;
 import k25.datle.gymania.Exercise.Exercise;
@@ -66,6 +64,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main_layout);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -235,22 +235,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
     }
 
     @Override

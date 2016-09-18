@@ -1,7 +1,7 @@
 package k25.datle.gymania.Exercise;
 
 /**
- * Created by Nguyen on 9/11/2016.
+ * Created by Dat Le on 9/11/2016.
  */
 
 public class CardioExercise extends Exercise {

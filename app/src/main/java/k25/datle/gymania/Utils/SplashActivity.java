@@ -11,7 +11,7 @@ import 	android.view.Window;
 import 	android.view.WindowManager;
 
 /**
- * Created by Nguyen on 9/10/2016.
+ * Created by Dat Le on 9/10/2016.
  */
 
 public class SplashActivity extends AppCompatActivity {

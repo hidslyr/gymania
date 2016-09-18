@@ -17,7 +17,7 @@ import k25.datle.gymania.Exercise.CardioExercise;
 import k25.datle.gymania.Utils.DataManager;
 
 /**
- * Created by Nguyen on 9/17/2016.
+ * Created by Dat Le on 9/17/2016.
  */
 
 public class NewExerciseActivity extends AppCompatActivity implements View.OnClickListener{

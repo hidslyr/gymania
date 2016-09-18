@@ -25,7 +25,7 @@ import k25.datle.gymania.Utils.*;
 import k25.datle.gymania.R;
 import android.os.AsyncTask;
 /**
- * Created by Nguyen on 9/7/2016.
+ * Created by Dat Le on 9/7/2016.
  */
 
 public class PracticeFragment extends Fragment implements OnClickListener{

@@ -8,10 +8,8 @@
     <dimen name="fab_margin">16dp</dimen>
 
 
-
     <!-- Nav item dimen -->
     <dimen name="nav_item_textSize">30dp</dimen>
-
 
 
     <!--Timer text-->
@@ -37,7 +35,8 @@
 
 
     <!--New exercise input edit text-->
-    <item name="new_exercise_input_number_edit_text_layout_weight" format="float" type="dimen">1</item>
+    <item name="new_exercise_input_number_edit_text_layout_weight" format="float" type="dimen">1
+    </item>
     <item name="new_exercise_number_edit_text_ems" format="integer" type="dimen">1</item>
 
     <item name="new_exercise_empty_view_layout_weight" format="float" type="dimen">0.5</item>

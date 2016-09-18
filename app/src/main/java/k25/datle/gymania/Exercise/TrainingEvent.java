@@ -17,7 +17,7 @@ import k25.datle.gymania.Utils.Utils;
 import k25.datle.gymania.R;
 
 /**
- * Created by Nguyen on 9/11/2016.
+ * Created by Dat Le on 9/11/2016.
  */
 
 public class TrainingEvent{

@@ -13,6 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -20,7 +24,7 @@ import k25.datle.gymania.MainActivity;
 import k25.datle.gymania.R;
 
 /**
- * Created by Nguyen on 9/18/2016.
+ * Created by Dat Le on 9/18/2016.
  */
 
 public class GalleryGridViewAdapter extends ArrayAdapter {
@@ -46,6 +50,7 @@ public class GalleryGridViewAdapter extends ArrayAdapter {
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.image = (ImageView) row.findViewById(R.id.gridview_image);
+            holder.shareButton = (ShareButton) row.findViewById(R.id.share_facebook_btn);
             row.setTag(holder);
         } else {
             holder = (ViewHolder) row.getTag();
@@ -58,12 +63,21 @@ public class GalleryGridViewAdapter extends ArrayAdapter {
         longClickListener.SetPath(item.GetPath());
         holder.image.setOnLongClickListener(longClickListener);
 
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(item.getImage())
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+
+        holder.shareButton.setShareContent(content);
+
         return row;
     }
 
     static class ViewHolder {
-        TextView imageTitle;
         ImageView image;
+        ShareButton shareButton;
     }
 
     static public class ImageItem {
@@ -89,9 +103,15 @@ public class GalleryGridViewAdapter extends ArrayAdapter {
     }
 
     public class MyOnClickListener implements View.OnClickListener{
+        Bitmap image;
+
+        public void SetImage(Bitmap image) {
+            this.image = image;
+        }
+
         public void onClick(View v) {
-            //TODO : call a menucontext
-            //
+
+
         }
     }
 

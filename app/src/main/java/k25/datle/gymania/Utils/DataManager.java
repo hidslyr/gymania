@@ -17,7 +17,7 @@ import k25.datle.gymania.Profile.Profile;
 import k25.datle.gymania.Profile.ProfileManager;
 
 /**
- * Created by Nguyen on 9/10/2016.
+ * Created by Dat Le on 9/10/2016.
  */
 
 public class DataManager {

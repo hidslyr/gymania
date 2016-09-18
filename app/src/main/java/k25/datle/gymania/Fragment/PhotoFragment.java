@@ -40,7 +40,7 @@ import k25.datle.gymania.Utils.ListViewItem;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by Nguyen on 9/18/2016.
+ * Created by Dat Le on 9/18/2016.
  */
 
 
